@@ -62,8 +62,8 @@ class ProductCalculator //Klasser skal være i PascalCase; productCalculator -> 
     }
 }
 
-class customer //Selvstændig klasse bør være i sin eget fil
+class Customer //Selvstændig klasse bør være i sin eget fil
 {
-    public string name { get; set; }
-    public string Phone_Number { get; set; }
+    public string Name { get; set; } //Property skal være PascalCase
+    public string PhoneNumber { get; set; } //Property skal være PascalCase
 }
