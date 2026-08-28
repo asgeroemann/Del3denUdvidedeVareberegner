@@ -11,10 +11,11 @@
 // Underviserens facitliste findes i KodestandardTjekliste-FACIT.md i denne
 // mappe — kig IKKE i den, før du selv har lavet øvelsen færdig.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+//Remove unused usings (comment out)
+//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
 
 class ProductCalculator //Klasser skal være i PascalCase; productCalculator -> ProductCalculator 
 {
@@ -46,8 +47,9 @@ class ProductCalculator //Klasser skal være i PascalCase; productCalculator -> 
             Console.WriteLine("Total: " + samletPris);
         }
 
-        var message = CalculateStatus(quantity);
+        double message = CalculateStatus(quantity); //Skriv typen tydeligt når typen er skjult
         Console.WriteLine(message);
+        
     }
 
     static string CalculateStatus(int quantity) //Lokal variabel skal være med camelCase Quantity->quantity
@@ -62,8 +64,3 @@ class ProductCalculator //Klasser skal være i PascalCase; productCalculator -> 
     }
 }
 
-class Customer //Selvstændig klasse bør være i sin eget fil
-{
-    public string Name { get; set; } //Property skal være PascalCase
-    public string PhoneNumber { get; set; } //Property skal være PascalCase
-}
