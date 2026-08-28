@@ -23,44 +23,85 @@ class ProductCalculator //Klasser skal være i PascalCase; productCalculator -> 
 
     static void Main(string[] args)
     {
-        Console.WriteLine("Indtast antal varer:");
-        string quantityInput = Console.ReadLine(); //Ungarsk notation; strQuantity-quantity. Lokal variabel.
-        int quantity = Convert.ToInt32(quantityInput); // Men nu får vi så 2 variabler med samme navn
-                                                      // hvor den ungarsk notation før differentierde dem
-                                                      //strQuantity -> quantityInput
-
-        Console.WriteLine("Indtast pris pr. vare:");
-        string priceInput = Console.ReadLine();           //Ungarsk notation igen. strPrice->priceInput
-        double price = Convert.ToDouble(priceInput);      //dPrice->price, for meget inrykning
-
-        // Sætter x til antal gange pris
-        double samletPris = quantity * price;           //Ikke meningsfuldt navn. x->samletPris
-
-        if (samletPris > 500)
+        List<string> varer = new List<string>();
+        List<decimal> antal = new List<decimal>();
+        List<decimal> pris = new List<decimal>();
+        decimal subtotal = 0;
+        do
         {
-        double rabat = samletPris * 0.15;               //Ikke meningsfuldt navn y->rabat
-        double prisEfterRabat = samletPris - rabat;                  //z->prisEfterRabat
-            Console.WriteLine("Rabat: " + rabat);
-            Console.WriteLine("Total: " + prisEfterRabat);
-        }
-        else {
-            Console.WriteLine("Total: " + samletPris);
-        }
+            //Brugerinput print instruktion. 
+            Console.WriteLine("Indtast {Varenavn} {antal} {pris pr. enhed}");
+            string input = Console.ReadLine();
+            string[] inputTokens = input.Split(' ');
+            //Valider bruger input
+            if (inputTokens.Length != 3)
+            {
+                Console.WriteLine("Fejl. Forkert antal input! prøv igen!");
+                continue;
+            }
+            decimal inputAntal;
+            decimal inputPris;
+            if (!Decimal.TryParse(inputTokens[1], out inputAntal))
+            {
+                Console.WriteLine("Fejl: Antal skal være et tal! Prøv igen!");
+                continue;
+            }
+            if (!Decimal.TryParse(inputTokens[2], out inputPris))
+            {
+                Console.WriteLine("Fejl: Pris skal være et tal! Prøv igen!");
+                continue;
+            }
+            varer.Add(inputTokens[0]);
+            antal.Add(inputAntal);
+            pris.Add(inputPris);
+            subtotal += inputPris;
 
-        string message = CalculateStatus(quantity); //Skriv typen tydeligt når typen er skjult
-        Console.WriteLine(message);
-        
+            Console.WriteLine("vil du registrere endnu en vare? (j/n)");
+            char tast = '0';
+            while (true)
+            {
+                switch (char.ToLower(Console.ReadKey(true).KeyChar))
+                {
+                    case 'j':
+                        tast = 'j';
+                        break;
+                    case 'n':
+                        tast = 'n';
+                        break;
+                    default:
+                        break;
+                }
+                if (tast == 'j' || tast == 'n') break;
+            }
+            if (tast == 'n') break;
+
+        } while (true);
+
+        Console.Clear();
+        Console.WriteLine("REGNING: ");
+        for (int i = 0; i < varer.Count; i++)
+        {
+            Console.WriteLine($"\t{varer[i]}\t\t{antal[i]} á {pris[i]}kr=\t{antal[i] * pris[i]}kr");
+        }
+        Console.WriteLine();
+        if (subtotal > 500)
+        {
+            Console.WriteLine($"SUBTOTAL: {subtotal}");
+            decimal rabat = Rabat(subtotal, 15m);
+            decimal nyTotal = subtotal - rabat;
+            Console.WriteLine($"Købt for over 500kr giver 15% rabat: {rabat} kr");
+            Console.WriteLine($"TOTAL AT BETALE: {nyTotal}kr.");
+            
+        } else
+        {
+            Console.WriteLine($"TOTAL AT BETALE: {subtotal}kr.");
+        }
+        Console.ReadKey();
     }
 
-    static string CalculateStatus(int quantity) //Lokal variabel skal være med camelCase Quantity->quantity
-                                                //Metode-navne skal være i PascalCase. calculate_Status->CalculateStatus
-                                                //Man kunne også sige navnet ikke er særligt meningsfuldt (hvilken status?)
+    static decimal Rabat(decimal beløb, decimal procent)
     {
-        if (quantity > 50)
-        {
-            return "Stor ordre";
-        }
-        return "Almindelig ordre";
+        return beløb * (procent/100m); 
     }
 }
 
