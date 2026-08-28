@@ -47,7 +47,7 @@ class ProductCalculator //Klasser skal være i PascalCase; productCalculator -> 
             Console.WriteLine("Total: " + samletPris);
         }
 
-        double message = CalculateStatus(quantity); //Skriv typen tydeligt når typen er skjult
+        string message = CalculateStatus(quantity); //Skriv typen tydeligt når typen er skjult
         Console.WriteLine(message);
         
     }
