@@ -46,13 +46,15 @@ class ProductCalculator //Klasser skal være i PascalCase; productCalculator -> 
             Console.WriteLine("Total: " + samletPris);
         }
 
-        var message = calculate_Status(quantity);
+        var message = CalculateStatus(quantity);
         Console.WriteLine(message);
     }
 
-    static string calculate_Status(int Quantity)
+    static string CalculateStatus(int quantity) //Lokal variabel skal være med camelCase Quantity->quantity
+                                                //Metode-navne skal være i PascalCase. calculate_Status->CalculateStatus
+                                                //Man kunne også sige navnet ikke er særligt meningsfuldt (hvilken status?)
     {
-        if (Quantity > 50)
+        if (quantity > 50)
         {
             return "Stor ordre";
         }
@@ -60,7 +62,7 @@ class ProductCalculator //Klasser skal være i PascalCase; productCalculator -> 
     }
 }
 
-class customer
+class customer //Selvstændig klasse bør være i sin eget fil
 {
     public string name { get; set; }
     public string Phone_Number { get; set; }
